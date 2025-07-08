@@ -1,0 +1,301 @@
+/* Chat.css - Chat component styles */
+
+/* Login screen */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
+
+.login-card {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-card h2 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: var(--primary-color);
+}
+
+.login-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Chat layout */
+.chat-container {
+  display: flex;
+  height: calc(100vh - 150px);
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+/* Sidebar */
+.chat-sidebar {
+  width: 280px;
+  background-color: #f0f2f5;
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.user-profile {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.status-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-indicator.online {
+  background-color: var(--success-color);
+}
+
+.status-indicator.away {
+  background-color: var(--warning-color);
+}
+
+.status-indicator.offline {
+  background-color: var(--lighter-text);
+}
+
+.rooms-section,
+.users-section {
+  padding: 1rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.create-room-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.create-room-form {
+  margin-bottom: 1rem;
+}
+
+.create-room-form input {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Room list */
+.room-list {
+  list-style: none;
+}
+
+.room-item {
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.25rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.room-item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.room-item.active {
+  background-color: rgba(74, 111, 165, 0.1);
+  font-weight: bold;
+}
+
+.room-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-count {
+  font-size: 0.8rem;
+  color: var(--light-text);
+}
+
+.unread-badge {
+  background-color: var(--accent-color);
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+}
+
+/* User list */
+.user-list {
+  list-style: none;
+}
+
+.user-item {
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot.online {
+  background-color: var(--success-color);
+}
+
+.status-dot.away {
+  background-color: var(--warning-color);
+}
+
+.status-dot.offline {
+  background-color: var(--lighter-text);
+}
+
+.last-seen {
+  font-size: 0.7rem;
+  color: var(--lighter-text);
+}
+
+.private-chat-btn {
+  font-size: 0.8rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.private-chat-btn.active {
+  background-color: var(--accent-color);
+}
+
+/* Main chat area */
+.chat-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cancel-private-btn {
+  font-size: 0.9rem;
+  padding: 0.25rem 0.5rem;
+  background-color: var(--error-color);
+}
+
+.notification-icon {
+  position: relative;
+  cursor: pointer;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: var(--error-color);
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+}
+
+/* Messages container */
+.messages-container {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.message-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.message {
+  max-width: 70%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background-color: #f0f2f5;
+  align-self: flex-start;
+  position: relative;
+}
+
+.message.own-message {
+  background-color: #e3f2fd;
+  align-self: flex-end;
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.sender

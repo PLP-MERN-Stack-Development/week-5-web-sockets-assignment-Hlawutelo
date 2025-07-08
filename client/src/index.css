@@ -1,0 +1,69 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .chat-container {
+    flex-direction: column;
+  }
+  
+  .room-list, .user-list {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  .message-container {
+    height: 250px;
+  }
+}
+
+/* Message styles */
+.message {
+  padding: 8px 12px;
+  margin: 5px 0;
+  border-radius: 10px;
+  max-width: 70%;
+}
+
+.message-sent {
+  background-color: #dcf8c6;
+  align-self: flex-end;
+}
+
+.message-received {
+  background-color: #f1f0f0;
+  align-self: flex-start;
+}
+
+.message-system {
+  background-color: #e6e6e6;
+  color: #666;
+  font-style: italic;
+  text-align: center;
+  max-width: 100%;
+}
+
+/* Button styles */
+button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Input styles */
+input[type="text"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

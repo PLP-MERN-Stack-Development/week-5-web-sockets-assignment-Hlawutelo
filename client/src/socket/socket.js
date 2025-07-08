@@ -21,6 +21,8 @@ export const useSocket = () => {
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
   const [typingUsers, setTypingUsers] = useState([]);
+  const [rooms, setRooms] = useState(['general', 'random', 'tech']);
+  const [currentRoom, setCurrentRoom] = useState('general');
 
   // Connect to socket server
   const connect = (username) => {
@@ -36,18 +38,33 @@ export const useSocket = () => {
   };
 
   // Send a message
-  const sendMessage = (message) => {
-    socket.emit('send_message', { message });
+  const sendMessage = (message, room = currentRoom) => {
+    socket.emit('send_message', { text: message, room });
   };
 
   // Send a private message
   const sendPrivateMessage = (to, message) => {
-    socket.emit('private_message', { to, message });
+    socket.emit('send_message', { to, text: message });
+  };
+
+  // Join a room
+  const joinRoom = (room) => {
+    socket.emit('join_room', room);
+    setCurrentRoom(room);
+  };
+
+  // Create a new room
+  const createRoom = (roomName) => {
+    socket.emit('create_room', roomName);
   };
 
   // Set typing status
   const setTyping = (isTyping) => {
-    socket.emit('typing', isTyping);
+    if (isTyping) {
+      socket.emit('typing', users[socket.id]);
+    } else {
+      socket.emit('stop_typing', users[socket.id]);
+    }
   };
 
   // Socket event listeners
@@ -67,9 +84,13 @@ export const useSocket = () => {
       setMessages((prev) => [...prev, message]);
     };
 
-    const onPrivateMessage = (message) => {
-      setLastMessage(message);
-      setMessages((prev) => [...prev, message]);
+    // Room events
+    const onRoomHistory = (roomMessages) => {
+      setMessages(roomMessages);
+    };
+
+    const onAvailableRooms = (availableRooms) => {
+      setRooms(availableRooms);
     };
 
     // User events
@@ -78,26 +99,26 @@ export const useSocket = () => {
     };
 
     const onUserJoined = (user) => {
-      // You could add a system message here
+      // Add system message
       setMessages((prev) => [
         ...prev,
         {
           id: Date.now(),
           system: true,
-          message: `${user.username} joined the chat`,
+          text: `${user.username} joined ${user.room || 'the chat'}`,
           timestamp: new Date().toISOString(),
         },
       ]);
     };
 
     const onUserLeft = (user) => {
-      // You could add a system message here
+      // Add system message
       setMessages((prev) => [
         ...prev,
         {
           id: Date.now(),
           system: true,
-          message: `${user.username} left the chat`,
+          text: `${user.username} left ${user.room || 'the chat'}`,
           timestamp: new Date().toISOString(),
         },
       ]);
@@ -112,22 +133,26 @@ export const useSocket = () => {
     socket.on('connect', onConnect);
     socket.on('disconnect', onDisconnect);
     socket.on('receive_message', onReceiveMessage);
-    socket.on('private_message', onPrivateMessage);
+    socket.on('room_history', onRoomHistory);
+    socket.on('available_rooms', onAvailableRooms);
     socket.on('user_list', onUserList);
     socket.on('user_joined', onUserJoined);
     socket.on('user_left', onUserLeft);
-    socket.on('typing_users', onTypingUsers);
+    socket.on('typing', onTypingUsers);
+    socket.on('stop_typing', onTypingUsers);
 
     // Clean up event listeners
     return () => {
       socket.off('connect', onConnect);
       socket.off('disconnect', onDisconnect);
       socket.off('receive_message', onReceiveMessage);
-      socket.off('private_message', onPrivateMessage);
+      socket.off('room_history', onRoomHistory);
+      socket.off('available_rooms', onAvailableRooms);
       socket.off('user_list', onUserList);
       socket.off('user_joined', onUserJoined);
       socket.off('user_left', onUserLeft);
-      socket.off('typing_users', onTypingUsers);
+      socket.off('typing', onTypingUsers);
+      socket.off('stop_typing', onTypingUsers);
     };
   }, []);
 
@@ -138,12 +163,16 @@ export const useSocket = () => {
     messages,
     users,
     typingUsers,
+    rooms,
+    currentRoom,
     connect,
     disconnect,
     sendMessage,
     sendPrivateMessage,
     setTyping,
+    joinRoom,
+    createRoom,
   };
 };
 
-export default socket; 
+export default socket;
